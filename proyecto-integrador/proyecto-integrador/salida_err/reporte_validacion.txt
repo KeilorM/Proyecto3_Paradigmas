@@ -1,0 +1,20 @@
+REPORTE DE VALIDACIÓN
+=====================
+
+Dominio:             académico
+Entidades válidas:   2
+Relaciones válidas:  0
+Reglas válidas:      0
+Errores:             2
+Advertencias:        0
+
+ERRORES (2)
+-----------
+  [global] Falta la sección obligatoria [RELACIONES]
+  [global] Falta la sección obligatoria [REGLAS_SOLICITADAS]
+
+ADVERTENCIAS (0)
+----------------
+  (ninguno)
+
+RESULTADO: se detectaron errores. Los elementos inválidos se excluyeron de conocimiento.pl.

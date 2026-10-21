@@ -1,0 +1,28 @@
+  [OK]    hecho persona(ana)
+  [OK]    hecho atomizado maria_jose
+  [OK]    hecho curso bases_de_datos
+  [OK]    hecho lleva(ana, paradigmas)
+  [OK]    hecho imparte(maria, paradigmas)
+  [OK]    no hay hechos inventados
+  [OK]    total de personas = 4
+  [OK]    total de relaciones lleva = 6
+  [OK]    companero(ana, luis)
+  [OK]    companero es simetrico
+  [OK]    nadie es companero de si mismo
+  [OK]    companeros por otro curso
+  [OK]    sin curso en comun no hay
+  [OK]    total de pares companero = 8
+  [OK]    curso_con_docente(paradigmas, maria)
+  [OK]    curso sin docente no aparece
+  [OK]    docente_de(ana, pedro)
+  [OK]    docente_de(ana, maria)
+  [OK]    docente_de(luis, pedro) es falso
+  [OK]    curso_sin_docente(redes)
+  [OK]    paradigmas tiene docente
+  [OK]    aprobado(ana, paradigmas)
+  [OK]    pendiente(ana, bases_de_datos)
+  [OK]    aprobado excluye pendiente
+  [OK]    total aprobados = 2
+  [OK]    total pendientes = 4
+
+Todas las pruebas Prolog pasaron.

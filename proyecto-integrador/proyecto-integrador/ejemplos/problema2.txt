@@ -1,0 +1,19 @@
+# Segundo archivo: demuestra la regeneración completa (condición de defensa)
+[ENTIDADES]
+persona: Sofía
+persona: Diego
+persona: Valeria
+curso: Lógica
+curso: Álgebra
+docente: Roberto
+
+[RELACIONES]
+lleva: Sofía, Lógica
+lleva: Diego, Lógica
+lleva: Valeria, Álgebra
+imparte: Roberto, Lógica
+
+[REGLAS_SOLICITADAS]
+companeros
+curso_con_docente
+curso_sin_docente

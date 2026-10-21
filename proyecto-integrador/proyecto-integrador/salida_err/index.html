@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Pipeline Haskell - Prolog - UI</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#1c2230;--muted:#5b6475;--card:#fff;--line:#e2e5ea;--accent:#2f5fd0;--c-lleva:#2f5fd0;--c-imparte:#d9822b;--c-aprobo:#2e9d5b;--err:#c0392b;--warn:#b7791f;--code:#f0f2f6}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--fg:#e6e9ef;--muted:#9aa3b5;--card:#1a1f2a;--line:#2b3242;--accent:#7aa2ff;--c-lleva:#7aa2ff;--c-imparte:#f0a45d;--c-aprobo:#58c98a;--err:#ff7b6b;--warn:#e3b341;--code:#10131a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+header{padding:28px 24px 12px;max-width:1100px;margin:0 auto}
+h1{margin:0 0 4px;font-size:24px}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav div{max-width:1100px;margin:0 auto;padding:8px 24px;display:flex;gap:6px 16px;flex-wrap:wrap;align-items:center}
+nav a{color:var(--accent);text-decoration:none;font-size:14px}
+nav input{margin-left:auto;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);min-width:200px}
+main{max-width:1100px;margin:0 auto;padding:8px 24px 48px}
+section{margin-top:30px;scroll-margin-top:60px}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:15px;margin:16px 0 2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card b{display:block;font-size:24px}
+.card span{color:var(--muted);font-size:13px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+nav input{min-width:0;flex:1 1 160px}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line);font-size:14px}
+th{background:var(--code);color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow:auto;margin:6px 0}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid var(--line);color:var(--muted)}
+ul.lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+li.error{border-left:4px solid var(--err)}
+li.aviso{border-left:4px solid var(--warn)}
+.ok{color:var(--c-aprobo)}
+.muted{color:var(--muted)}
+.oculto{display:none}
+button.copy{float:right;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:2px 10px;cursor:pointer}
+svg.grafo{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:14px}
+.nodo rect{fill:var(--code);stroke:var(--line)}
+.nodo text{fill:var(--fg);font-size:13px}
+.col{fill:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.e{fill:none;stroke-width:1.8;opacity:.85}
+.e-lleva{stroke:var(--c-lleva)}
+.e-imparte{stroke:var(--c-imparte)}
+.e-aprobo{stroke:var(--c-aprobo);stroke-dasharray:5 3}
+
+</style>
+</head>
+<body>
+<header>
+<h1>Pipeline Haskell → Prolog → UI</h1>
+<p>Dominio académico · página generada automáticamente desde <code>problema.txt</code></p>
+</header>
+<nav><div><a href='#resumen'>Resumen</a><a href='#entidades'>Entidades</a><a href='#relaciones'>Relaciones</a><a href='#hechos'>Hechos</a><a href='#reglas'>Reglas</a><a href='#consultas'>Consultas</a><a href='#diagnosticos'>Advertencias y errores</a><a href='#conocimiento'>conocimiento.pl</a><input id='filtro' type='search' placeholder='Filtrar tablas y listas…' aria-label='Filtrar'></div></nav>
+<main>
+<section id='resumen'><h2>Resumen</h2><div class='cards'><div class='card'><b>2</b><span>entidades</span></div><div class='card'><b>0</b><span>relaciones</span></div><div class='card'><b>2</b><span>hechos Prolog</span></div><div class='card'><b>0</b><span>reglas</span></div><div class='card'><b>2</b><span>consultas</span></div><div class='card'><b>2</b><span>errores</span></div><div class='card'><b>0</b><span>advertencias</span></div></div></section>
+<section id='entidades'><h2>Entidades detectadas</h2><div class='tw'><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Átomo Prolog</th><th>Línea</th></tr></thead><tbody>
+<tr><td><span class='tag'>persona</span></td><td>Ana</td><td><code>ana</code></td><td>2</td></tr>
+<tr><td><span class='tag'>curso</span></td><td>Paradigmas</td><td><code>paradigmas</code></td><td>3</td></tr>
+</tbody></table></div></section>
+<section id='relaciones'><h2>Relaciones generadas</h2><p class='muted'>Sin elementos.</p><svg class='grafo' viewBox='0 0 730 74' role='img' aria-label='Grafo de relaciones'>
+<text x='95' y='18' text-anchor='middle' class='col'>personas</text>
+<text x='365' y='18' text-anchor='middle' class='col'>cursos</text>
+<text x='635' y='18' text-anchor='middle' class='col'>docentes</text>
+<g class='nodo'><title>Ana</title><rect x='20' y='30' width='150' height='30' rx='6'/><text x='30' y='50'>Ana</text></g>
+<g class='nodo'><title>Paradigmas</title><rect x='290' y='30' width='150' height='30' rx='6'/><text x='300' y='50'>Paradigmas</text></g>
+</svg>
+<p class='muted'><span class='tag' style='border-color:var(--c-lleva);color:var(--c-lleva)'>lleva</span> <span class='tag' style='border-color:var(--c-imparte);color:var(--c-imparte)'>imparte</span> <span class='tag' style='border-color:var(--c-aprobo);color:var(--c-aprobo)'>aprobo</span> </p>
+</section>
+<section id='hechos'><h2>Hechos Prolog producidos</h2><div class='tw'><table><thead><tr><th>Hecho</th><th>Origen en problema.txt</th></tr></thead><tbody>
+<tr><td><code>persona(ana).</code></td><td>línea 2: persona: Ana</td></tr>
+<tr><td><code>curso(paradigmas).</code></td><td>línea 3: curso: Paradigmas</td></tr>
+</tbody></table></div></section>
+<section id='reglas'><h2>Reglas generadas</h2><p class='muted'>No se generaron reglas.</p></section>
+<section id='consultas'><h2>Consultas sugeridas</h2><ul class='lista'><li class='item'><button class='copy' data-q='persona(X)'>Copiar</button><b>Listar personas</b><br><code>?- persona(X).</code></li><li class='item'><button class='copy' data-q='curso(X)'>Copiar</button><b>Listar cursos</b><br><code>?- curso(X).</code></li></ul><p class='muted'>Para ejecutarlas: <code>swipl consultas.pl</code> y luego <code>?- ejecutar_consultas.</code></p></section>
+<section id='diagnosticos'><h2>Advertencias y errores</h2><ul class='lista'><li class='item error'><b>ERROR</b> <span class='muted'>(global)</span><br>Falta la sección obligatoria [RELACIONES]</li><li class='item error'><b>ERROR</b> <span class='muted'>(global)</span><br>Falta la sección obligatoria [REGLAS_SOLICITADAS]</li></ul></section>
+<section id='conocimiento'><h2>Contenido de conocimiento.pl</h2><pre>:- encoding(utf8).
+
+% ==============================================================
+% conocimiento.pl
+% Base de conocimiento generada automáticamente por el pipeline
+% Haskell -&gt; Prolog -&gt; UI. NO editar a mano: se regenera desde
+% problema.txt. Dominio: académico
+% ==============================================================
+
+:- dynamic persona/1, curso/1, docente/1, lleva/2, imparte/2, aprobo/2.
+
+% ---------------------------- HECHOS ----------------------------
+
+% linea 2: persona: Ana
+persona(ana).
+
+% linea 3: curso: Paradigmas
+curso(paradigmas).
+
+% ---------------------------- REGLAS ----------------------------
+
+% (no se solicitaron reglas válidas)
+
+</pre></section>
+</main>
+<script>
+const q=document.getElementById('filtro');
+q.addEventListener('input',()=>{const t=q.value.toLowerCase();
+ document.querySelectorAll('tbody tr, li.item').forEach(e=>{
+  e.classList.toggle('oculto',t!==''&&!e.textContent.toLowerCase().includes(t));});});
+document.querySelectorAll('button.copy').forEach(b=>b.addEventListener('click',()=>{
+ const txt='?- '+b.dataset.q+'.';
+ if(navigator.clipboard){navigator.clipboard.writeText(txt);}
+ b.textContent='Copiado';setTimeout(()=>{b.textContent='Copiar'},1200);}));
+
+</script>
+</body>
+</html>

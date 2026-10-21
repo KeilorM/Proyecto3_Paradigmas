@@ -1,0 +1,77 @@
+
+Listar personas
+  persona(ana)
+  persona(luis)
+  persona(maria_jose)
+  persona(carlos)
+
+Listar cursos
+  curso(paradigmas)
+  curso(bases_de_datos)
+  curso(redes)
+
+Listar docentes
+  docente(maria)
+  docente(pedro)
+
+Listar relaciones \u00ABlleva\u00BB
+  lleva(ana,paradigmas)
+  lleva(luis,paradigmas)
+  lleva(maria_jose,paradigmas)
+  lleva(ana,bases_de_datos)
+  lleva(carlos,bases_de_datos)
+  lleva(luis,redes)
+
+Listar relaciones \u00ABimparte\u00BB
+  imparte(maria,paradigmas)
+  imparte(pedro,bases_de_datos)
+
+Listar relaciones \u00ABaprobo\u00BB
+  aprobo(ana,paradigmas)
+  aprobo(luis,paradigmas)
+
+Todos los pares de compa\u00F1eros
+  companero(ana,luis)
+  companero(ana,maria_jose)
+  companero(luis,ana)
+  companero(luis,maria_jose)
+  companero(maria_jose,ana)
+  companero(maria_jose,luis)
+  companero(ana,carlos)
+  companero(carlos,ana)
+
+Compa\u00F1eros de Ana
+  companero(ana,luis)
+  companero(ana,maria_jose)
+  companero(ana,carlos)
+
+Cursos con su docente
+  curso_con_docente(paradigmas,maria)
+  curso_con_docente(bases_de_datos,pedro)
+
+Docente del curso Paradigmas
+  curso_con_docente(paradigmas,maria)
+
+Docente de cada persona
+  docente_de(ana,maria)
+  docente_de(luis,maria)
+  docente_de(maria_jose,maria)
+  docente_de(ana,pedro)
+  docente_de(carlos,pedro)
+
+Docentes de Ana
+  docente_de(ana,maria)
+  docente_de(ana,pedro)
+
+Cursos sin docente asignado
+  curso_sin_docente(redes)
+
+Cursos aprobados
+  aprobado(ana,paradigmas)
+  aprobado(luis,paradigmas)
+
+Cursos pendientes
+  pendiente(maria_jose,paradigmas)
+  pendiente(ana,bases_de_datos)
+  pendiente(carlos,bases_de_datos)
+  pendiente(luis,redes)

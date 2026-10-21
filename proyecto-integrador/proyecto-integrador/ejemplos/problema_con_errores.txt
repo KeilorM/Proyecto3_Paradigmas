@@ -1,0 +1,25 @@
+# Archivo con errores deliberados para demostrar las validaciones
+persona: fuera de seccion
+
+[ENTIDADES]
+persona: Ana
+persona: Ana
+persona Luis
+curso: Paradigmas
+docente: Maria
+animal: Firulais
+
+[RELACIONES]
+lleva: Ana, Paradigmas
+lleva: Ana, Paradigmas
+lleva: Pedro, Paradigmas
+lleva: Maria, Paradigmas
+imparte: Maria
+enseña: Maria, Paradigmas
+
+[REGLAS_SOLICITADAS]
+companeros
+hermanos
+ruta_posible
+magia
+aprobacion

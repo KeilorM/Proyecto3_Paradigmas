@@ -1,0 +1,3 @@
+[ENTIDADES]
+persona: Ana
+curso: Paradigmas

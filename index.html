@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Pipeline Haskell - Prolog - UI</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#1c2230;--muted:#5b6475;--card:#fff;--line:#e2e5ea;--accent:#2f5fd0;--c-lleva:#2f5fd0;--c-imparte:#d9822b;--c-aprobo:#2e9d5b;--err:#c0392b;--warn:#b7791f;--code:#f0f2f6}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--fg:#e6e9ef;--muted:#9aa3b5;--card:#1a1f2a;--line:#2b3242;--accent:#7aa2ff;--c-lleva:#7aa2ff;--c-imparte:#f0a45d;--c-aprobo:#58c98a;--err:#ff7b6b;--warn:#e3b341;--code:#10131a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+header{padding:28px 24px 12px;max-width:1100px;margin:0 auto}
+h1{margin:0 0 4px;font-size:24px}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav div{max-width:1100px;margin:0 auto;padding:8px 24px;display:flex;gap:6px 16px;flex-wrap:wrap;align-items:center}
+nav a{color:var(--accent);text-decoration:none;font-size:14px}
+nav input{margin-left:auto;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);min-width:200px}
+main{max-width:1100px;margin:0 auto;padding:8px 24px 48px}
+section{margin-top:30px;scroll-margin-top:60px}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:15px;margin:16px 0 2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card b{display:block;font-size:24px}
+.card span{color:var(--muted);font-size:13px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+nav input{min-width:0;flex:1 1 160px}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line);font-size:14px}
+th{background:var(--code);color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow:auto;margin:6px 0}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid var(--line);color:var(--muted)}
+ul.lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.lista li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+li.error{border-left:4px solid var(--err)}
+li.aviso{border-left:4px solid var(--warn)}
+.ok{color:var(--c-aprobo)}
+.muted{color:var(--muted)}
+.oculto{display:none}
+button.copy{float:right;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:2px 10px;cursor:pointer}
+svg.grafo{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:14px}
+.nodo rect{fill:var(--code);stroke:var(--line)}
+.nodo text{fill:var(--fg);font-size:13px}
+.col{fill:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.e{fill:none;stroke-width:1.8;opacity:.85}
+.e-lleva{stroke:var(--c-lleva)}
+.e-imparte{stroke:var(--c-imparte)}
+.e-aprobo{stroke:var(--c-aprobo);stroke-dasharray:5 3}
+
+</style>
+</head>
+<body>
+<header>
+<h1>Pipeline Haskell → Prolog → UI</h1>
+<p>Dominio académico · página generada automáticamente desde <code>problema.txt</code></p>
+</header>
+<nav><div><a href='#resumen'>Resumen</a><a href='#entidades'>Entidades</a><a href='#relaciones'>Relaciones</a><a href='#hechos'>Hechos</a><a href='#reglas'>Reglas</a><a href='#consultas'>Consultas</a><a href='#diagnosticos'>Advertencias y errores</a><a href='#conocimiento'>conocimiento.pl</a><input id='filtro' type='search' placeholder='Filtrar tablas y listas…' aria-label='Filtrar'></div></nav>
+<main>
+<section id='resumen'><h2>Resumen</h2><div class='cards'><div class='card'><b>9</b><span>entidades</span></div><div class='card'><b>10</b><span>relaciones</span></div><div class='card'><b>19</b><span>hechos Prolog</span></div><div class='card'><b>5</b><span>reglas</span></div><div class='card'><b>15</b><span>consultas</span></div><div class='card'><b>0</b><span>errores</span></div><div class='card'><b>0</b><span>advertencias</span></div></div></section>
+<section id='entidades'><h2>Entidades detectadas</h2><div class='tw'><table><thead><tr><th>Tipo</th><th>Nombre</th><th>Átomo Prolog</th><th>Línea</th></tr></thead><tbody>
+<tr><td><span class='tag'>persona</span></td><td>Ana</td><td><code>ana</code></td><td>5</td></tr>
+<tr><td><span class='tag'>persona</span></td><td>Luis</td><td><code>luis</code></td><td>6</td></tr>
+<tr><td><span class='tag'>persona</span></td><td>María José</td><td><code>maria_jose</code></td><td>7</td></tr>
+<tr><td><span class='tag'>persona</span></td><td>Carlos</td><td><code>carlos</code></td><td>8</td></tr>
+<tr><td><span class='tag'>curso</span></td><td>Paradigmas</td><td><code>paradigmas</code></td><td>9</td></tr>
+<tr><td><span class='tag'>curso</span></td><td>Bases de Datos</td><td><code>bases_de_datos</code></td><td>10</td></tr>
+<tr><td><span class='tag'>curso</span></td><td>Redes</td><td><code>redes</code></td><td>11</td></tr>
+<tr><td><span class='tag'>docente</span></td><td>Maria</td><td><code>maria</code></td><td>12</td></tr>
+<tr><td><span class='tag'>docente</span></td><td>Pedro</td><td><code>pedro</code></td><td>13</td></tr>
+</tbody></table></div></section>
+<section id='relaciones'><h2>Relaciones generadas</h2><div class='tw'><table><thead><tr><th>Relación</th><th>Origen</th><th>Destino</th><th>Línea</th></tr></thead><tbody>
+<tr><td><span class='tag'>lleva</span></td><td>Ana</td><td>Paradigmas</td><td>16</td></tr>
+<tr><td><span class='tag'>lleva</span></td><td>Luis</td><td>Paradigmas</td><td>17</td></tr>
+<tr><td><span class='tag'>lleva</span></td><td>María José</td><td>Paradigmas</td><td>18</td></tr>
+<tr><td><span class='tag'>lleva</span></td><td>Ana</td><td>Bases de Datos</td><td>19</td></tr>
+<tr><td><span class='tag'>lleva</span></td><td>Carlos</td><td>Bases de Datos</td><td>20</td></tr>
+<tr><td><span class='tag'>lleva</span></td><td>Luis</td><td>Redes</td><td>21</td></tr>
+<tr><td><span class='tag'>aprobo</span></td><td>Ana</td><td>Paradigmas</td><td>22</td></tr>
+<tr><td><span class='tag'>aprobo</span></td><td>Luis</td><td>Paradigmas</td><td>23</td></tr>
+<tr><td><span class='tag'>imparte</span></td><td>Maria</td><td>Paradigmas</td><td>24</td></tr>
+<tr><td><span class='tag'>imparte</span></td><td>Pedro</td><td>Bases de Datos</td><td>25</td></tr>
+</tbody></table></div><svg class='grafo' viewBox='0 0 730 206' role='img' aria-label='Grafo de relaciones'>
+<text x='95' y='18' text-anchor='middle' class='col'>personas</text>
+<text x='365' y='18' text-anchor='middle' class='col'>cursos</text>
+<text x='635' y='18' text-anchor='middle' class='col'>docentes</text>
+<line class='e e-lleva' x1='170' y1='45' x2='290' y2='45'><title>lleva: Ana, Paradigmas</title></line>
+<line class='e e-lleva' x1='170' y1='89' x2='290' y2='45'><title>lleva: Luis, Paradigmas</title></line>
+<line class='e e-lleva' x1='170' y1='133' x2='290' y2='45'><title>lleva: María José, Paradigmas</title></line>
+<line class='e e-lleva' x1='170' y1='45' x2='290' y2='89'><title>lleva: Ana, Bases de Datos</title></line>
+<line class='e e-lleva' x1='170' y1='177' x2='290' y2='89'><title>lleva: Carlos, Bases de Datos</title></line>
+<line class='e e-lleva' x1='170' y1='89' x2='290' y2='133'><title>lleva: Luis, Redes</title></line>
+<line class='e e-aprobo' x1='170' y1='50' x2='290' y2='50'><title>aprobo: Ana, Paradigmas</title></line>
+<line class='e e-aprobo' x1='170' y1='94' x2='290' y2='50'><title>aprobo: Luis, Paradigmas</title></line>
+<line class='e e-imparte' x1='560' y1='45' x2='440' y2='45'><title>imparte: Maria, Paradigmas</title></line>
+<line class='e e-imparte' x1='560' y1='89' x2='440' y2='89'><title>imparte: Pedro, Bases de Datos</title></line>
+<g class='nodo'><title>Ana</title><rect x='20' y='30' width='150' height='30' rx='6'/><text x='30' y='50'>Ana</text></g>
+<g class='nodo'><title>Luis</title><rect x='20' y='74' width='150' height='30' rx='6'/><text x='30' y='94'>Luis</text></g>
+<g class='nodo'><title>María José</title><rect x='20' y='118' width='150' height='30' rx='6'/><text x='30' y='138'>María José</text></g>
+<g class='nodo'><title>Carlos</title><rect x='20' y='162' width='150' height='30' rx='6'/><text x='30' y='182'>Carlos</text></g>
+<g class='nodo'><title>Paradigmas</title><rect x='290' y='30' width='150' height='30' rx='6'/><text x='300' y='50'>Paradigmas</text></g>
+<g class='nodo'><title>Bases de Datos</title><rect x='290' y='74' width='150' height='30' rx='6'/><text x='300' y='94'>Bases de Datos</text></g>
+<g class='nodo'><title>Redes</title><rect x='290' y='118' width='150' height='30' rx='6'/><text x='300' y='138'>Redes</text></g>
+<g class='nodo'><title>Maria</title><rect x='560' y='30' width='150' height='30' rx='6'/><text x='570' y='50'>Maria</text></g>
+<g class='nodo'><title>Pedro</title><rect x='560' y='74' width='150' height='30' rx='6'/><text x='570' y='94'>Pedro</text></g>
+</svg>
+<p class='muted'><span class='tag' style='border-color:var(--c-lleva);color:var(--c-lleva)'>lleva</span> <span class='tag' style='border-color:var(--c-imparte);color:var(--c-imparte)'>imparte</span> <span class='tag' style='border-color:var(--c-aprobo);color:var(--c-aprobo)'>aprobo</span> </p>
+</section>
+<section id='hechos'><h2>Hechos Prolog producidos</h2><div class='tw'><table><thead><tr><th>Hecho</th><th>Origen en problema.txt</th></tr></thead><tbody>
+<tr><td><code>persona(ana).</code></td><td>línea 5: persona: Ana</td></tr>
+<tr><td><code>persona(luis).</code></td><td>línea 6: persona: Luis</td></tr>
+<tr><td><code>persona(maria_jose).</code></td><td>línea 7: persona: María José</td></tr>
+<tr><td><code>persona(carlos).</code></td><td>línea 8: persona: Carlos</td></tr>
+<tr><td><code>curso(paradigmas).</code></td><td>línea 9: curso: Paradigmas</td></tr>
+<tr><td><code>curso(bases_de_datos).</code></td><td>línea 10: curso: Bases de Datos</td></tr>
+<tr><td><code>curso(redes).</code></td><td>línea 11: curso: Redes</td></tr>
+<tr><td><code>docente(maria).</code></td><td>línea 12: docente: Maria</td></tr>
+<tr><td><code>docente(pedro).</code></td><td>línea 13: docente: Pedro</td></tr>
+<tr><td><code>lleva(ana, paradigmas).</code></td><td>línea 16: lleva: Ana, Paradigmas</td></tr>
+<tr><td><code>lleva(luis, paradigmas).</code></td><td>línea 17: lleva: Luis, Paradigmas</td></tr>
+<tr><td><code>lleva(maria_jose, paradigmas).</code></td><td>línea 18: lleva: María José, Paradigmas</td></tr>
+<tr><td><code>lleva(ana, bases_de_datos).</code></td><td>línea 19: lleva: Ana, Bases de Datos</td></tr>
+<tr><td><code>lleva(carlos, bases_de_datos).</code></td><td>línea 20: lleva: Carlos, Bases de Datos</td></tr>
+<tr><td><code>lleva(luis, redes).</code></td><td>línea 21: lleva: Luis, Redes</td></tr>
+<tr><td><code>imparte(maria, paradigmas).</code></td><td>línea 24: imparte: Maria, Paradigmas</td></tr>
+<tr><td><code>imparte(pedro, bases_de_datos).</code></td><td>línea 25: imparte: Pedro, Bases de Datos</td></tr>
+<tr><td><code>aprobo(ana, paradigmas).</code></td><td>línea 22: aprobo: Ana, Paradigmas</td></tr>
+<tr><td><code>aprobo(luis, paradigmas).</code></td><td>línea 23: aprobo: Luis, Paradigmas</td></tr>
+</tbody></table></div></section>
+<section id='reglas'><h2>Reglas generadas</h2><h3>companeros <span class='tag'>línea 28</span></h3><p class='muted'>Dos personas distintas son compañeros si llevan el mismo curso. Define: companero/2</p><pre>companero(X, Y) :-
+    lleva(X, Curso),
+    lleva(Y, Curso),
+    X \= Y.
+</pre><h3>curso_con_docente <span class='tag'>línea 29</span></h3><p class='muted'>Relaciona cada curso con el docente que lo imparte. Define: curso_con_docente/2</p><pre>curso_con_docente(Curso, Docente) :-
+    curso(Curso),
+    imparte(Docente, Curso).
+</pre><h3>docente_de_estudiante <span class='tag'>línea 30</span></h3><p class='muted'>Un docente lo es de una persona si imparte un curso que ella lleva. Define: docente_de/2</p><pre>docente_de(Persona, Docente) :-
+    lleva(Persona, Curso),
+    imparte(Docente, Curso).
+</pre><h3>curso_sin_docente <span class='tag'>línea 31</span></h3><p class='muted'>Cursos declarados que ningún docente imparte. Define: curso_sin_docente/1</p><pre>curso_sin_docente(Curso) :-
+    curso(Curso),
+    \+ imparte(_, Curso).
+</pre><h3>aprobacion <span class='tag'>línea 32</span></h3><p class='muted'>Una persona aprobó un curso que lleva; si no, queda pendiente. Define: aprobado/2 pendiente/2</p><pre>aprobado(Persona, Curso) :-
+    lleva(Persona, Curso),
+    aprobo(Persona, Curso).
+
+pendiente(Persona, Curso) :-
+    lleva(Persona, Curso),
+    \+ aprobo(Persona, Curso).
+</pre></section>
+<section id='consultas'><h2>Consultas sugeridas</h2><ul class='lista'><li class='item'><button class='copy' data-q='persona(X)'>Copiar</button><b>Listar personas</b><br><code>?- persona(X).</code></li><li class='item'><button class='copy' data-q='curso(X)'>Copiar</button><b>Listar cursos</b><br><code>?- curso(X).</code></li><li class='item'><button class='copy' data-q='docente(X)'>Copiar</button><b>Listar docentes</b><br><code>?- docente(X).</code></li><li class='item'><button class='copy' data-q='lleva(X, Y)'>Copiar</button><b>Listar relaciones «lleva»</b><br><code>?- lleva(X, Y).</code></li><li class='item'><button class='copy' data-q='imparte(X, Y)'>Copiar</button><b>Listar relaciones «imparte»</b><br><code>?- imparte(X, Y).</code></li><li class='item'><button class='copy' data-q='aprobo(X, Y)'>Copiar</button><b>Listar relaciones «aprobo»</b><br><code>?- aprobo(X, Y).</code></li><li class='item'><button class='copy' data-q='companero(X, Y)'>Copiar</button><b>Todos los pares de compañeros</b><br><code>?- companero(X, Y).</code></li><li class='item'><button class='copy' data-q='companero(ana, X)'>Copiar</button><b>Compañeros de Ana</b><br><code>?- companero(ana, X).</code></li><li class='item'><button class='copy' data-q='curso_con_docente(Curso, Docente)'>Copiar</button><b>Cursos con su docente</b><br><code>?- curso_con_docente(Curso, Docente).</code></li><li class='item'><button class='copy' data-q='curso_con_docente(paradigmas, Docente)'>Copiar</button><b>Docente del curso Paradigmas</b><br><code>?- curso_con_docente(paradigmas, Docente).</code></li><li class='item'><button class='copy' data-q='docente_de(Persona, Docente)'>Copiar</button><b>Docente de cada persona</b><br><code>?- docente_de(Persona, Docente).</code></li><li class='item'><button class='copy' data-q='docente_de(ana, Docente)'>Copiar</button><b>Docentes de Ana</b><br><code>?- docente_de(ana, Docente).</code></li><li class='item'><button class='copy' data-q='curso_sin_docente(Curso)'>Copiar</button><b>Cursos sin docente asignado</b><br><code>?- curso_sin_docente(Curso).</code></li><li class='item'><button class='copy' data-q='aprobado(Persona, Curso)'>Copiar</button><b>Cursos aprobados</b><br><code>?- aprobado(Persona, Curso).</code></li><li class='item'><button class='copy' data-q='pendiente(Persona, Curso)'>Copiar</button><b>Cursos pendientes</b><br><code>?- pendiente(Persona, Curso).</code></li></ul><p class='muted'>Para ejecutarlas: <code>swipl consultas.pl</code> y luego <code>?- ejecutar_consultas.</code></p></section>
+<section id='diagnosticos'><h2>Advertencias y errores</h2><p class='ok'>✓ Sin errores ni advertencias.</p></section>
+<section id='conocimiento'><h2>Contenido de conocimiento.pl</h2><pre>:- encoding(utf8).
+
+% ==============================================================
+% conocimiento.pl
+% Base de conocimiento generada automáticamente por el pipeline
+% Haskell -&gt; Prolog -&gt; UI. NO editar a mano: se regenera desde
+% problema.txt. Dominio: académico
+% ==============================================================
+
+:- dynamic persona/1, curso/1, docente/1, lleva/2, imparte/2, aprobo/2.
+
+% ---------------------------- HECHOS ----------------------------
+
+% linea 5: persona: Ana
+persona(ana).
+
+% linea 6: persona: Luis
+persona(luis).
+
+% linea 7: persona: María José
+persona(maria_jose).
+
+% linea 8: persona: Carlos
+persona(carlos).
+
+% linea 9: curso: Paradigmas
+curso(paradigmas).
+
+% linea 10: curso: Bases de Datos
+curso(bases_de_datos).
+
+% linea 11: curso: Redes
+curso(redes).
+
+% linea 12: docente: Maria
+docente(maria).
+
+% linea 13: docente: Pedro
+docente(pedro).
+
+% linea 16: lleva: Ana, Paradigmas
+lleva(ana, paradigmas).
+
+% linea 17: lleva: Luis, Paradigmas
+lleva(luis, paradigmas).
+
+% linea 18: lleva: María José, Paradigmas
+lleva(maria_jose, paradigmas).
+
+% linea 19: lleva: Ana, Bases de Datos
+lleva(ana, bases_de_datos).
+
+% linea 20: lleva: Carlos, Bases de Datos
+lleva(carlos, bases_de_datos).
+
+% linea 21: lleva: Luis, Redes
+lleva(luis, redes).
+
+% linea 24: imparte: Maria, Paradigmas
+imparte(maria, paradigmas).
+
+% linea 25: imparte: Pedro, Bases de Datos
+imparte(pedro, bases_de_datos).
+
+% linea 22: aprobo: Ana, Paradigmas
+aprobo(ana, paradigmas).
+
+% linea 23: aprobo: Luis, Paradigmas
+aprobo(luis, paradigmas).
+
+% ---------------------------- REGLAS ----------------------------
+
+% linea 28: companeros
+% Dos personas distintas son compañeros si llevan el mismo curso.
+companero(X, Y) :-
+    lleva(X, Curso),
+    lleva(Y, Curso),
+    X \= Y.
+
+% linea 29: curso_con_docente
+% Relaciona cada curso con el docente que lo imparte.
+curso_con_docente(Curso, Docente) :-
+    curso(Curso),
+    imparte(Docente, Curso).
+
+% linea 30: docente_de_estudiante
+% Un docente lo es de una persona si imparte un curso que ella lleva.
+docente_de(Persona, Docente) :-
+    lleva(Persona, Curso),
+    imparte(Docente, Curso).
+
+% linea 31: curso_sin_docente
+% Cursos declarados que ningún docente imparte.
+curso_sin_docente(Curso) :-
+    curso(Curso),
+    \+ imparte(_, Curso).
+
+% linea 32: aprobacion
+% Una persona aprobó un curso que lleva; si no, queda pendiente.
+aprobado(Persona, Curso) :-
+    lleva(Persona, Curso),
+    aprobo(Persona, Curso).
+
+pendiente(Persona, Curso) :-
+    lleva(Persona, Curso),
+    \+ aprobo(Persona, Curso).
+
+</pre></section>
+</main>
+<script>
+const q=document.getElementById('filtro');
+q.addEventListener('input',()=>{const t=q.value.toLowerCase();
+ document.querySelectorAll('tbody tr, li.item').forEach(e=>{
+  e.classList.toggle('oculto',t!==''&&!e.textContent.toLowerCase().includes(t));});});
+document.querySelectorAll('button.copy').forEach(b=>b.addEventListener('click',()=>{
+ const txt='?- '+b.dataset.q+'.';
+ if(navigator.clipboard){navigator.clipboard.writeText(txt);}
+ b.textContent='Copiado';setTimeout(()=>{b.textContent='Copiar'},1200);}));
+
+</script>
+</body>
+</html>

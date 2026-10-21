@@ -1,0 +1,32 @@
+# Problema de ejemplo - dominio académico
+# Las líneas que empiezan con # son comentarios.
+
+[ENTIDADES]
+persona: Ana
+persona: Luis
+persona: María José
+persona: Carlos
+curso: Paradigmas
+curso: Bases de Datos
+curso: Redes
+docente: Maria
+docente: Pedro
+
+[RELACIONES]
+lleva: Ana, Paradigmas
+lleva: Luis, Paradigmas
+lleva: María José, Paradigmas
+lleva: Ana, Bases de Datos
+lleva: Carlos, Bases de Datos
+lleva: Luis, Redes
+aprobo: Ana, Paradigmas
+aprobo: Luis, Paradigmas
+imparte: Maria, Paradigmas
+imparte: Pedro, Bases de Datos
+
+[REGLAS_SOLICITADAS]
+companeros
+curso_con_docente
+docente_de_estudiante
+curso_sin_docente
+aprobacion

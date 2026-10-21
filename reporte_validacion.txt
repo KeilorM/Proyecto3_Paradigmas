@@ -1,0 +1,19 @@
+REPORTE DE VALIDACIÓN
+=====================
+
+Dominio:             académico
+Entidades válidas:   9
+Relaciones válidas:  10
+Reglas válidas:      5
+Errores:             0
+Advertencias:        0
+
+ERRORES (0)
+-----------
+  (ninguno)
+
+ADVERTENCIAS (0)
+----------------
+  (ninguno)
+
+RESULTADO: entrada válida, sin errores ni advertencias.

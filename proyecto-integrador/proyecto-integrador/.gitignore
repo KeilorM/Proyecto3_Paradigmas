@@ -1,0 +1,6 @@
+build/
+salida/
+docs/doxygen/
+*.hi
+*.o
+dist-newstyle/

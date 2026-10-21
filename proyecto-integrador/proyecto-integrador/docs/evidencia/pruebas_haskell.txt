@@ -1,0 +1,37 @@
+  [OK]    entrada valida: cuenta entidades, relaciones y reglas
+  [OK]    entrada valida: no produce diagnosticos
+  [OK]    atomo: minusculas y sin acentos
+  [OK]    atomo: espacios, signos y guiones colapsados
+  [OK]    atomo: empieza con digito se entrecomilla
+  [OK]    atomo: nombre vacio
+  [OK]    escaparAtomo escapa comillas y barras
+  [OK]    entidad duplicada: advertencia y se conserva una
+  [OK]    relacion con entidad no declarada: error y se excluye
+  [OK]    relacion con entidad de tipo incorrecto: error
+  [OK]    relacion duplicada: advertencia
+  [OK]    linea con formato invalido: error con numero de linea
+  [OK]    seccion obligatoria ausente: error
+  [OK]    linea fuera de seccion: error
+  [OK]    regla de otro dominio: error y no se acepta
+  [OK]    regla desconocida: error
+  [OK]    regla sin hechos de apoyo: advertencia
+  [OK]    acepta CRLF y BOM
+  [OK]    encabezados en minusculas son validos
+  [OK]    trazabilidad: lineas de origen correctas
+  [OK]    hechos: formato Prolog
+  [OK]    conocimiento.pl: comentario de trazabilidad y hecho
+  [OK]    conocimiento.pl: declara predicados dinamicos y codificacion
+  [OK]    conocimiento.pl: incluye reglas solicitadas
+  [OK]    conocimiento.pl: no incluye reglas no solicitadas
+  [OK]    conocimiento.pl: elementos invalidos no aparecen
+  [OK]    consultas: incluye general y concreta por regla
+  [OK]    consultas.pl: formato ejecutable
+  [OK]    reporte: resume errores
+  [OK]    reporte: entrada limpia
+  [OK]    html: contiene secciones obligatorias
+  [OK]    html: refleja el contenido de la entrada
+  [OK]    html: escapa caracteres especiales
+  [OK]    regeneracion: otro problema.txt cambia todos los artefactos
+  [OK]    archivo vacio: no falla y reporta tres secciones ausentes
+
+35/35 pruebas correctas

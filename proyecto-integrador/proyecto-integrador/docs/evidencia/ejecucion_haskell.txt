@@ -1,0 +1,7 @@
+Entrada:        problema.txt
+Entidades: 9 | Relaciones: 10 | Reglas: 5 | Errores: 0 | Advertencias: 0
+Archivos generados en salida/:
+  - conocimiento.pl
+  - consultas.pl
+  - index.html
+  - reporte_validacion.txt

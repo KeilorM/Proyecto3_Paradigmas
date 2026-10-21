@@ -1,0 +1,43 @@
+cabal-version:      2.4
+name:               proyecto-integrador
+version:            1.0.0.0
+synopsis:           Pipeline funcional-logico: Haskell -> Prolog -> UI
+description:        Lee problema.txt, genera conocimiento.pl, consultas.pl,
+                    reporte_validacion.txt e index.html.
+license:            NONE
+build-type:         Simple
+extra-source-files: problema.txt, README.md
+
+common comunes
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:    base >=4.14 && <5
+
+library
+    import:           comunes
+    hs-source-dirs:   src
+    exposed-modules:  Domain.Atomo
+                      Domain.Types
+                      Domain.Dominio
+                      Domain.Hechos
+                      Domain.Validacion
+                      Application.Parser
+                      Application.Consultas
+                      Application.Pipeline
+                      Infrastructure.Archivos
+                      Infrastructure.PrologGen
+                      Infrastructure.Reporte
+                      Presentation.HtmlGen
+
+executable proyecto-integrador
+    import:           comunes
+    main-is:          Main.hs
+    hs-source-dirs:   app
+    build-depends:    proyecto-integrador, directory, filepath
+
+test-suite spec
+    import:           comunes
+    type:             exitcode-stdio-1.0
+    main-is:          Spec.hs
+    hs-source-dirs:   test
+    build-depends:    proyecto-integrador

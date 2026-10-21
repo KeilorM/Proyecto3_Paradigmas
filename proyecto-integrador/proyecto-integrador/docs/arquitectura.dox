@@ -1,0 +1,67 @@
+/**
+\defgroup capa_domain Capa Domain
+Reglas de negocio puras: modelo intermedio, catálogo del dominio, hechos y validación.
+No depende de ninguna otra capa ni realiza entrada/salida.
+
+\defgroup capa_application Capa Application
+Casos de uso: parseo de `problema.txt`, consultas sugeridas y el orquestador
+del pipeline. Depende solo de Domain; las salidas se inyectan por la interfaz `Generadores`.
+
+\defgroup capa_infrastructure Capa Infrastructure
+Adaptadores técnicos: generación de Prolog, reporte de validación y lectura/escritura
+de archivos en UTF-8.
+
+\defgroup capa_presentation Capa Presentation
+Interfaz de usuario generada (`index.html`) y la raíz de composición (`Main`).
+
+\defgroup capa_pruebas Pruebas
+Pruebas automáticas en Haskell (`test/Spec.hs`) y en Prolog (`test/pruebas.pl`).
+
+\page pipeline Pipeline Haskell → Prolog → UI
+
+\section pipeline_flujo Flujo de datos
+
+\dot
+digraph pipeline {
+  rankdir=TB; node [shape=box, style="rounded,filled", fillcolor="#eef2ff", fontname="Helvetica"];
+  txt   [label="problema.txt", shape=note, fillcolor="#fff7e6"];
+  parse [label="Parser\n(secciones y líneas)"];
+  crudo [label="ProblemaCrudo"];
+  valid [label="Validación\n(Domain)"];
+  model [label="Problema\n(modelo intermedio)", fillcolor="#e6f7ec"];
+  pl    [label="conocimiento.pl\nconsultas.pl", shape=note, fillcolor="#fff7e6"];
+  rep   [label="reporte_validacion.txt", shape=note, fillcolor="#fff7e6"];
+  html  [label="index.html", shape=note, fillcolor="#fff7e6"];
+  txt -> parse -> crudo -> valid -> model;
+  model -> pl; model -> rep; model -> html;
+}
+\enddot
+
+\section pipeline_capas Capas (Clean Architecture)
+
+Las dependencias apuntan siempre hacia adentro:
+
+\dot
+digraph capas {
+  rankdir=BT; node [shape=box, style="rounded,filled", fontname="Helvetica"];
+  d [label="Domain\nTypes, Dominio, Hechos, Validacion, Atomo", fillcolor="#e6f7ec"];
+  a [label="Application\nParser, Consultas, Pipeline", fillcolor="#eef2ff"];
+  i [label="Infrastructure\nPrologGen, Reporte, Archivos", fillcolor="#fff7e6"];
+  p [label="Presentation\nHtmlGen, Main", fillcolor="#fdeaea"];
+  a -> d; i -> a; i -> d; p -> a; p -> d;
+}
+\enddot
+
+\section pipeline_pasos Pasos
+
+-# `Application.Parser.parsearProblema` numera las líneas, divide en secciones y
+   comprueba el formato de cada línea.
+-# `Domain.Validacion.construirProblema` resuelve tipos, detecta duplicados,
+   entidades no declaradas y reglas fuera del dominio. Produce el `Domain.Types.Problema`.
+-# `Application.Consultas.consultasSugeridas` calcula las consultas a partir del modelo.
+-# Los generadores de `Infrastructure` y `Presentation` convierten el mismo modelo en
+   `conocimiento.pl`, `consultas.pl`, `reporte_validacion.txt` y `index.html`.
+
+La UI y el Prolog comparten la misma fuente (`Domain.Hechos.hechosDe`), por lo que
+siempre son coherentes entre sí.
+*/
